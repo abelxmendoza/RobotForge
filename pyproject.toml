@@ -11,6 +11,7 @@ dependencies = []
 
 [project.optional-dependencies]
 dev = ["pytest>=7"]
+importers = ["xacro>=2.0,<3"]
 
 [project.scripts]
 robotforge = "robotforge.cli:main"

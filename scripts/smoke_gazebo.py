@@ -17,12 +17,16 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('manifest', nargs='?', default=str(root / 'robots/reference/robot.json'))
     parser.add_argument("--turn", action="store_true", help="Verify wheel-derived yaw instead of forward distance")
+    parser.add_argument('--sdf', help='Use an already exported world instead of a hardware manifest')
+    parser.add_argument('--model-name', help='Required with --sdf')
     args = parser.parse_args()
-    data = load(args.manifest)
+    if args.sdf and not args.model_name:
+        parser.error('--sdf requires --model-name')
+    data = {'id': args.model_name} if args.sdf else load(args.manifest)
     env = dict(os.environ, GZ_PARTITION='robotforge_' + uuid.uuid4().hex)
     with tempfile.TemporaryDirectory(prefix='robotforge-') as directory:
         path = Path(directory) / 'world.sdf'
-        path.write_text(world(data))
+        path.write_text(Path(args.sdf).read_text() if args.sdf else world(data))
         with (Path(directory) / 'server.log').open('w+') as log:
             server = subprocess.Popen(['gz', 'sim', '-s', '-r', str(path)], env=env, stdout=log, stderr=log)
             try:
@@ -40,7 +44,10 @@ def main():
                     raise RuntimeError('Gazebo odometry did not become ready within 20s')
                 reader = subprocess.Popen(['gz', 'topic', '-e', '-t', topic+'odometry'], env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
                 try:
-                    subprocess.run(['gz', 'topic', '-t', topic+'cmd_vel', '-m', 'gz.msgs.Twist', '-p', ('angular: {z: 0.3}' if args.turn else 'linear: {x: 0.2}')], env=env, check=True, timeout=5, capture_output=True)
+                    # Allow transport discovery and repeat commands across publisher startup.
+                    for _ in range(3):
+                        subprocess.run(['gz', 'topic', '-t', topic+'cmd_vel', '-m', 'gz.msgs.Twist', '-p', ('angular: {z: 0.3}' if args.turn else 'linear: {x: 0.2}')], env=env, check=True, timeout=5, capture_output=True)
+                        time.sleep(0.2)
                     try:
                         output, _ = reader.communicate(timeout=4)
                     except subprocess.TimeoutExpired:

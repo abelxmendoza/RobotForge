@@ -35,3 +35,12 @@ A provisional ordinary-wheel Freenove model can now drive and turn in Gazebo. Ge
 robotforge generate-sdf robots/omega1/prototype.json --output /tmp/omega1.sdf
 gz sim -r /tmp/omega1.sdf
 ```
+
+## Universal description interface (in progress)
+
+URDF, Xacro and single-model SDF now share a loss-preserving description interface.
+Existing rover manifests enter the same pipeline. The Gazebo adapter accepts
+explicit wheel assignments and dimensions, and the compatibility runner writes
+machine-readable import, export and optional motion evidence for the provisional
+Omega1 and official TurtleBot3 Burger. See [setup and scope](docs/multi-robot.md).
+This does not complete the measured Omega1 acceptance gate.
