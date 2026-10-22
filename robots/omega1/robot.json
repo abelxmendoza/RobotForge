@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "id": "omega1",
+  "name": "Omega1 Raspberry Pi 4 rover",
+  "revision": "initial-unmeasured",
+  "components": [
+    {
+      "id": "compute",
+      "name": "Raspberry Pi 4",
+      "revision": "unknown",
+      "kind": "computer",
+      "status": "confirmed",
+      "specifications": {}
+    }
+  ],
+  "simulation": {
+    "mass_kg": null,
+    "chassis_dimensions_m": null,
+    "wheel_radius_m": null,
+    "wheel_separation_m": null,
+    "inertia_kg_m2": null,
+    "drive_configuration": null
+  }
+}
