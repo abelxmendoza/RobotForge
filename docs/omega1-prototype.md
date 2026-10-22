@@ -8,7 +8,7 @@ This is a runnable approximation based on the Freenove FNK0043 ordinary-wheel ar
 source .venv/bin/activate
 robotforge generate-sdf robots/omega1/prototype.json --output /tmp/omega1.sdf
 gz sdf -k /tmp/omega1.sdf
-gz sim -r /tmp/omega1.sdf
+gz sim -r --gui-config config/gazebo.config /tmp/omega1.sdf
 ```
 
 In another terminal, drive or turn:
@@ -52,3 +52,7 @@ robotforge generate-urdf robots/omega1/prototype.json --output /tmp/omega1.urdf
 The box and wheel layout is not a reconstruction of the vendor's exact 21 cm envelope. Camera, pan/tilt, batteries, sensors and Pi are currently lumped into the body, without separate geometry or sensor plugins. Gazebo's default contact settings and ideal joint controller are not calibrated motor/traction models. No motor RPM, torque, gear ratio, battery capacity or sensor calibration is asserted.
 
 Acceptance checks wheel-derived odometry, not independent ground-truth pose. Passing movement tests demonstrates the generated drive chain works, not accurate tire slip or real-world turning radius. ROS bridge verification remains a separate task.
+
+## Black viewport fallback
+
+The generator now includes ambient light, a directional sun and contrasting materials. The supplied GUI config starts near the small rover. If the default OGRE2 renderer stays black, try `QT_XCB_GL_INTEGRATION=xcb_glx gz sim -r --render-engine-gui ogre --gui-config config/gazebo.config /tmp/omega1.sdf`. This selects the compatibility renderer without changing system graphics settings.

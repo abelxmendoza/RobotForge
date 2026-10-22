@@ -51,6 +51,14 @@ def world(data):
     s = ready(data)
     root = E.Element("sdf", version="1.9")
     w = add(root, "world", name="robotforge")
+    scene = add(w, "scene")
+    add(scene, "ambient", "0.6 0.6 0.6 1")
+    add(scene, "background", "0.65 0.72 0.8 1")
+    sun = add(w, "light", name="sun", type="directional")
+    add(sun, "pose", "0 0 10 0 0 0")
+    add(sun, "diffuse", "0.8 0.8 0.8 1")
+    add(sun, "specular", "0.2 0.2 0.2 1")
+    add(sun, "direction", "-0.5 0.1 -0.9")
     physics = add(w, "physics", name="default", type="ignored")
     add(physics, "max_step_size", 0.001)
     add(physics, "real_time_factor", 1)
@@ -82,6 +90,11 @@ def world(data):
             geometry = add(add(item, "geometry"), shape)
             for key, value in dims.items():
                 add(geometry, key, value)
+            if kind == "visual":
+                material = add(item, "material")
+                color = "0.12 0.22 0.4 1" if name == "base_link" else "0.8 0.6 0.05 1"
+                add(material, "ambient", color)
+                add(material, "diffuse", color)
             if name == "caster" and kind == "collision":
                 ode = add(add(add(item, "surface"), "friction"), "ode")
                 add(ode, "mu", 0)
