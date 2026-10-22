@@ -27,3 +27,7 @@ Unknown values stay null. Do not substitute plausible dimensions for measurement
 | Motor, gearbox, controller model | unknown | labels / datasheets |
 
 For each measurement, record date, method, uncertainty and source photo/document. Do not copy the reference fixture's values into Omega1.
+
+## Located vendor documentation
+
+See [Freenove evidence](freenove-evidence.md) for the identified local kit repository. Four driven wheels and four geared motors are documented kit facts. Ordinary-wheel skid steer versus mecanum configuration and installed board revisions still require confirmation. The two-wheel/caster fixture is not an Omega1 drivetrain model.

@@ -1,0 +1,34 @@
+{
+  "upstream_repository": "https://github.com/Freenove/Freenove_4WD_Smart_Car_Kit_for_Raspberry_Pi",
+  "checkout_commit": "a49db4b9dfa9b7a82d172354cb3b4e0ed64985e5",
+  "candidate_family": "Freenove 4WD Smart Car Kit for Raspberry Pi",
+  "installed_wheel_variant": null,
+  "connection_board_revision": null,
+  "main_pcb_revision": null,
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "a7324a1da73dc3423f88fb073d90de32f174ce0821c844371e4e062eba92c162"
+    },
+    {
+      "path": "Tutorial(ordinary_wheels).pdf",
+      "sha256": "3bff1d29ff2bd998095947f41058b191561deed39874b240e465a07254aae3bf"
+    },
+    {
+      "path": "Tutorial(mecanum_wheels).pdf",
+      "sha256": "cfd126137b493582fbeb32bcfe512a86cabcf8abf02ac5b331e7931e42b10c12"
+    },
+    {
+      "path": "Code/Server/motor.py",
+      "sha256": "5da452f86a6f861a79aef2553d4c349fb467ba18df81ed04ccc86ca4c2ddb053"
+    },
+    {
+      "path": "Code/Server/parameter.py",
+      "sha256": "f2ecccbc1f305b04e4fb304eeb6c370455957b1a05d8024b17142bde45e09f3f"
+    },
+    {
+      "path": "Code/Server/adc.py",
+      "sha256": "adb0e22b5a87b5a7cb0745cb8ee6e8f7ed475294f047afeda273bb11e2b25ada"
+    }
+  ]
+}
