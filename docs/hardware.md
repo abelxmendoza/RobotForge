@@ -12,3 +12,18 @@ Before generating a physically meaningful model, collect:
 - CAD and datasheet sources, permissions, revisions, units, and checksums.
 
 Unknown values stay null. Do not substitute plausible dimensions for measurements. Any future illustrative simulation must be explicitly identified as a synthetic fixture.
+
+## Measurement worksheet
+
+| Field | Omega1 value | How to obtain |
+| --- | --- | --- |
+| Drive arrangement / wheel count | unknown | photo of underside and drivetrain |
+| Chassis length × width × height (m) | unknown | tape measure, excluding wheels |
+| Chassis-only mass (kg) | unknown | scale, excluding wheels/caster |
+| Wheel radius / width (m) | unknown | measure unloaded tire |
+| Left-right wheel centre separation (m) | unknown | axle measurement |
+| Mass per wheel (kg) | unknown | scale or datasheet |
+| Caster radius / mass | unknown | measure if present |
+| Motor, gearbox, controller model | unknown | labels / datasheets |
+
+For each measurement, record date, method, uncertainty and source photo/document. Do not copy the reference fixture's values into Omega1.

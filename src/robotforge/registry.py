@@ -47,8 +47,16 @@ def load(path):
 def simulation_gaps(data):
     """No physical model is ready until geometry and drive data are documented."""
     validate(data)
-    required = ("mass_kg", "chassis_dimensions_m", "wheel_radius_m", "wheel_separation_m", "inertia_kg_m2", "drive_configuration")
+    from .model import FIELDS, ready
     specs = data.get("simulation", {})
     if not isinstance(specs, dict):
         return ["simulation must be an object"]
-    return [key for key in required if specs.get(key) is None]
+    required = (*FIELDS, "caster_mass_kg", "drive_configuration", "provenance", "source")
+    missing = [key for key in required if specs.get(key) is None]
+    if missing:
+        return missing
+    try:
+        ready(data)
+    except ValidationError as error:
+        return [str(error)]
+    return []

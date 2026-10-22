@@ -22,3 +22,7 @@ The final command deliberately exits 1 until missing simulation inputs are suppl
 Target workstation: Ubuntu 22.04 bare-metal, Intel Core Ultra 9 275HX, RTX 5070 Laptop GPU (8 GB), 64 GB RAM. ROS 2 Humble and Gazebo Harmonic are intended integration targets; this scaffold installs neither. Their bridge compatibility must be verified before pinning integration dependencies.
 
 See [roadmap](docs/roadmap.md) and [hardware measurements](docs/hardware.md).
+
+## Generated simulation prototype
+
+A clearly labeled synthetic two-wheel rover now exercises manifest → SDF → Gazebo → velocity command → odometry. Primitive URDF export is also available. See [simulation setup and acceptance test](docs/simulation.md). Omega1 remains blocked on real measurements; the ROS bridge is not yet verified.

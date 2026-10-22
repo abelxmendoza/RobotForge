@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "id": "reference_rover",
+  "name": "Synthetic reference rover \u2014 NOT Omega1",
+  "revision": "fixture-1",
+  "components": [],
+  "simulation": {
+    "provenance": "synthetic_fixture",
+    "source": "Arbitrary engineering test fixture; dimensions do not describe Omega1. Inertias derived from uniform primitive solids.",
+    "drive_configuration": "differential_2wheel",
+    "chassis_mass_kg": 2.0,
+    "chassis_dimensions_m": [
+      0.4,
+      0.2,
+      0.1
+    ],
+    "wheel_radius_m": 0.08,
+    "wheel_width_m": 0.03,
+    "wheel_separation_m": 0.28,
+    "wheel_mass_kg": 0.15,
+    "caster_radius_m": 0.025,
+    "caster_mass_kg": 0.05
+  }
+}
