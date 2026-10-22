@@ -40,6 +40,6 @@ These ROS commands are documented setup steps, not a claim of successful ROS ver
 
 ## Omega1 gate
 
-`robotforge generate-sdf robots/omega1/robot.json` fails until required geometry, masses, drive arrangement, and source evidence are supplied. See hardware.md. Only two-wheel differential drive plus a caster is implemented; a different Omega1 drivetrain requires a corresponding generator implementation.
+`robotforge generate-sdf robots/omega1/robot.json` fails until required geometry, masses, drive arrangement, and source evidence are supplied. See hardware.md. Two-wheel differential drive plus a caster and four-wheel skid steer are supported. A runnable assumed-parameter Omega1 prototype is documented in [omega1-prototype.md](omega1-prototype.md); mecanum wheels require a separate controller/contact model.
 
 Manifest geometry is SI: metres, kilograms, radians. `chassis_mass_kg` excludes wheels and caster. `wheel_separation_m` is wheel centre-to-centre. Source evidence is mandatory. `measured` is a user assertion, not independent certification. Primitive inertia assumes uniform solids; it is a documented approximation rather than measured inertia.

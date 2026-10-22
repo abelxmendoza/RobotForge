@@ -20,7 +20,7 @@ Inspected checkout commit: `a49db4b9dfa9b7a82d172354cb3b4e0ed64985e5`.
 
 The user's reference to this kit makes it the candidate hardware family for Omega1. Kit parts remain unconfirmed installed components until matched to the physical assembly. Existing confirmed Raspberry Pi 4 inventory remains unchanged.
 
-Ordinary wheels require a four-wheel skid-steer generator; mecanum wheels require a different controller and wheel/contact model. The current two-wheel reference generator must not be used as Omega1's model.
+Ordinary wheels use the implemented four-wheel skid-steer prototype; mecanum wheels require a different controller and wheel/contact model. The two-wheel reference fixture must not be used as Omega1's model.
 
 No reliable chassis dimensions, wheel diameter, wheelbase, track width, assembled mass, gear ratio or motor torque/RPM specification was identified in the reviewed parts/assembly material and code. Keep those unknown. Measure front-rear axle spacing as well as left-right wheel centre spacing.
 

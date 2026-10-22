@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "id": "omega1_prototype",
+  "name": "Omega1 Freenove ordinary-wheel approximation",
+  "revision": "prototype-1",
+  "components": [],
+  "simulation": {
+    "provenance": "synthetic_fixture",
+    "source": "Freenove FNK0043 ordinary-wheel architecture and vendor 0.21 x 0.15 x 0.125 m outer envelope. All detailed dimensions and masses below are explicit prototype assumptions, not manufacturer or measured specifications. See docs/omega1-prototype.md.",
+    "drive_configuration": "skid_steer_4wheel",
+    "chassis_mass_kg": 0.5,
+    "chassis_dimensions_m": [
+      0.21,
+      0.09,
+      0.02
+    ],
+    "wheel_radius_m": 0.0325,
+    "wheel_width_m": 0.025,
+    "wheel_separation_m": 0.125,
+    "wheelbase_m": 0.13,
+    "wheel_mass_kg": 0.035
+  }
+}

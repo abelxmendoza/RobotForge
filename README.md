@@ -4,7 +4,7 @@ An open-source foundation for documenting hardware and generating reproducible r
 
 ## Status
 
-v0.1 provides a versioned JSON hardware manifest, validation CLI, Omega1 inventory, and automated tests. There is no 3D assembler, URDF generator, or working Gazebo simulation yet. JSON keeps this initial scaffold dependency-free and is also valid YAML 1.2.
+v0.1 provides a versioned JSON hardware manifest, validation CLI, Omega1 inventory, and automated tests. Primitive URDF/SDF generation and headless Gazebo prototype motion are available; a 3D assembler and physically calibrated Omega1 simulation are not yet implemented. JSON keeps this initial scaffold dependency-free and is also valid YAML 1.2.
 
 ## Ubuntu development
 
@@ -26,3 +26,12 @@ See [roadmap](docs/roadmap.md) and [hardware measurements](docs/hardware.md).
 ## Generated simulation prototype
 
 A clearly labeled synthetic two-wheel rover now exercises manifest → SDF → Gazebo → velocity command → odometry. Primitive URDF export is also available. See [simulation setup and acceptance test](docs/simulation.md). Omega1 remains blocked on real measurements; the ROS bridge is not yet verified.
+
+## Omega1 four-wheel prototype
+
+A provisional ordinary-wheel Freenove model can now drive and turn in Gazebo. Geometry and masses that lack evidence are explicitly labeled prototype assumptions. See [run commands and parameter provenance](docs/omega1-prototype.md). The measured Omega1 manifest remains incomplete.
+
+```bash
+robotforge generate-sdf robots/omega1/prototype.json --output /tmp/omega1.sdf
+gz sim -r /tmp/omega1.sdf
+```

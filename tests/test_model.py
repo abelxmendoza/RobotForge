@@ -52,3 +52,27 @@ def test_simulation_readiness_matches_generator():
     data = fixture()
     data['simulation']['wheel_radius_m'] = -1
     assert simulation_gaps(data)
+
+def test_four_wheel_model_drives_all_wheels_without_caster():
+    from robotforge.model import urdf
+    from robotforge.registry import simulation_gaps
+    data = load(ROOT / 'robots/omega1/prototype.json')
+    assert simulation_gaps(data) == []
+    model = E.fromstring(world(data)).find('world/model[@name="omega1_prototype"]')
+    assert len(model.findall('link')) == 5
+    assert len(model.findall('joint')) == 4
+    assert model.find('link[@name="caster"]') is None
+    plugin = model.find('plugin')
+    assert [x.text for x in plugin.findall('left_joint')] == ['left_front_joint', 'left_rear_joint']
+    assert [x.text for x in plugin.findall('right_joint')] == ['right_front_joint', 'right_rear_joint']
+    robot = E.fromstring(urdf(data))
+    assert len(robot.findall('joint[@type="continuous"]')) == 4
+    positions = {joint.find('origin').get('xyz') for joint in robot.findall('joint')}
+    assert len(positions) == 4
+
+@pytest.mark.parametrize('wheelbase', [None, True, -1, 0, 0.05, float('nan')])
+def test_four_wheel_invalid_wheelbase_rejected(wheelbase):
+    data = load(ROOT / 'robots/omega1/prototype.json')
+    data['simulation']['wheelbase_m'] = wheelbase
+    with pytest.raises(ValidationError):
+        world(data)

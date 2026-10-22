@@ -51,7 +51,8 @@ def simulation_gaps(data):
     specs = data.get("simulation", {})
     if not isinstance(specs, dict):
         return ["simulation must be an object"]
-    required = (*FIELDS, "caster_mass_kg", "drive_configuration", "provenance", "source")
+    geometry = FIELDS[:-1] + ("wheelbase_m",) if specs.get("drive_configuration") == "skid_steer_4wheel" else FIELDS + ("caster_mass_kg",)
+    required = (*geometry, "drive_configuration", "provenance", "source")
     missing = [key for key in required if specs.get(key) is None]
     if missing:
         return missing

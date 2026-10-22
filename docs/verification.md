@@ -16,3 +16,12 @@ On a shell with ROS sourced, the inherited PYTHONPATH can expose ROS pytest plug
 - Automated isolated headless acceptance: 141 odometry samples, 0.7966000000039128 m displacement after velocity command; passed minimum 0.1 m threshold.
 - ROS bridge executable absent; ROS command-to-odometry flow remains unverified.
 - Omega1 physical measurements absent; Omega1 generation correctly rejects incomplete input.
+
+## Four-wheel Omega1 prototype
+
+- Unit suite: 40 passed.
+- Prototype SDF passed libsdformat validation.
+- Prototype URDF converted to SDF and passed validation.
+- Forward acceptance: 140 samples, 0.7924 m wheel-odometry displacement.
+- Turning acceptance: 141 samples, 1.1967 rad wheel-odometry yaw change.
+- Prototype uses explicitly assumed geometry/masses; real Omega1 remains unmeasured. No ROS bridge or ground-truth traction validation is claimed.

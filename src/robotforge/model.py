@@ -1,4 +1,4 @@
-"""Generate a deliberately limited two-wheel differential rover model."""
+"""Generate primitive two-wheel and four-wheel differential rover models."""
 import math
 import re
 import xml.etree.ElementTree as E
@@ -13,13 +13,15 @@ def ready(data):
         raise ValidationError("simulation must be an object")
     if not re.fullmatch(r"[a-z][a-z0-9_]*", data["id"]):
         raise ValidationError("model id must use lowercase letters, digits and underscores")
-    if s.get("drive_configuration") != "differential_2wheel":
-        raise ValidationError("only differential_2wheel is supported; confirm drive arrangement")
+    if s.get("drive_configuration") not in ("differential_2wheel", "skid_steer_4wheel"):
+        raise ValidationError("unsupported drive configuration; mecanum requires a separate model")
     if s.get("provenance") not in ("synthetic_fixture", "measured"):
         raise ValidationError("simulation.provenance must be synthetic_fixture or measured")
     if not isinstance(s.get("source"), str) or not s["source"].strip():
         raise ValidationError("simulation.source must document measurements or fixture origin")
-    for key in FIELDS:
+    four = s["drive_configuration"] == "skid_steer_4wheel"
+    fields = FIELDS[:-1] + ("wheelbase_m",) if four else FIELDS + ("caster_mass_kg",)
+    for key in fields:
         values = s.get(key)
         if key == "chassis_dimensions_m":
             if not isinstance(values, list) or len(values) != 3:
@@ -33,7 +35,9 @@ def ready(data):
         raise ValidationError("wheel separation must clear the chassis")
     if s["wheel_radius_m"] <= height / 2:
         raise ValidationError("wheel radius must provide chassis ground clearance")
-    if s["caster_radius_m"] >= s["wheel_radius_m"]:
+    if four and s["wheelbase_m"] <= 2 * s["wheel_radius_m"]:
+        raise ValidationError("wheelbase must prevent front/rear wheel overlap")
+    if not four and s["caster_radius_m"] >= s["wheel_radius_m"]:
         raise ValidationError("caster must be smaller than drive wheels")
     return s
 
@@ -86,24 +90,34 @@ def world(data):
     mass = s["chassis_mass_kg"]
     link("base_link", mass, "box", {"size": f"{length} {width} {height}"}, "0 0 0 0 0 0", (mass*(width**2+height**2)/12, mass*(length**2+height**2)/12, mass*(length**2+width**2)/12))
     wm, ww = s["wheel_mass_kg"], s["wheel_width_m"]
+    four = s["drive_configuration"] == "skid_steer_4wheel"
+    wheel_joints = {"left": [], "right": []}
+    stations = (("front", s["wheelbase_m"]/2), ("rear", -s["wheelbase_m"]/2)) if four else (("", 0),)
     for side, sign in (("left", 1), ("right", -1)):
-        link(side+"_wheel", wm, "cylinder", {"radius":radius,"length":ww}, f"0 {sign*s['wheel_separation_m']/2} 0 {math.pi/2} 0 0", (wm*(3*radius**2+ww**2)/12, wm*(3*radius**2+ww**2)/12, wm*radius**2/2))
-        joint = add(model, "joint", name=side+"_joint", type="revolute")
+        for station, x in stations:
+            stem = side + ("_" + station if station else "")
+            wheel = link(stem+"_wheel", wm, "cylinder", {"radius":radius,"length":ww}, f"{x} {sign*s['wheel_separation_m']/2} 0 {math.pi/2} 0 0", (wm*(3*radius**2+ww**2)/12, wm*(3*radius**2+ww**2)/12, wm*radius**2/2))
+            joint = add(model, "joint", name=stem+"_joint", type="revolute")
+            add(joint, "parent", "base_link")
+            add(joint, "child", stem+"_wheel")
+            axis = add(joint, "axis")
+            add(axis, "xyz", "0 1 0", expressed_in="__model__")
+            wheel_joints[side].append(stem+"_joint")
+    if not four:
+        cr = s["caster_radius_m"]
+        # Caster mass is explicit in the fixture/model specification.
+        cm = s.get("caster_mass_kg")
+        if type(cm) not in (int,float) or not math.isfinite(cm) or cm <= 0:
+            raise ValidationError("caster_mass_kg requires a finite positive value")
+        link("caster", cm, "sphere", {"radius":cr}, f"{-length/2} 0 {cr-radius} 0 0 0", (2*cm*cr**2/5,)*3)
+        joint = add(model, "joint", name="caster_joint", type="fixed")
         add(joint, "parent", "base_link")
-        add(joint, "child", side+"_wheel")
-        axis = add(joint, "axis")
-        add(axis, "xyz", "0 1 0", expressed_in="__model__")
-    cr = s["caster_radius_m"]
-    # Caster mass is explicit in the fixture/model specification.
-    cm = s.get("caster_mass_kg")
-    if type(cm) not in (int,float) or not math.isfinite(cm) or cm <= 0:
-        raise ValidationError("caster_mass_kg requires a finite positive value")
-    link("caster", cm, "sphere", {"radius":cr}, f"{-length/2} 0 {cr-radius} 0 0 0", (2*cm*cr**2/5,)*3)
-    joint = add(model, "joint", name="caster_joint", type="fixed")
-    add(joint, "parent", "base_link")
-    add(joint, "child", "caster")
+        add(joint, "child", "caster")
     plugin = add(model, "plugin", filename="gz-sim-diff-drive-system", name="gz::sim::systems::DiffDrive")
-    for key, value in {"left_joint":"left_joint", "right_joint":"right_joint", "wheel_separation":s["wheel_separation_m"], "wheel_radius":radius,"topic":f"/model/{data['id']}/cmd_vel","odom_topic":f"/model/{data['id']}/odometry", "odom_publish_frequency":30}.items():
+    for side, joints in wheel_joints.items():
+        for name in joints:
+            add(plugin, side+"_joint", name)
+    for key, value in {"wheel_separation":s["wheel_separation_m"], "wheel_radius":radius,"topic":f"/model/{data['id']}/cmd_vel","odom_topic":f"/model/{data['id']}/odometry", "odom_publish_frequency":30}.items():
         add(plugin, key, value)
     E.indent(root)
     return E.tostring(root, encoding="unicode") + "\n"
