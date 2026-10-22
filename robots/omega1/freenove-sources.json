@@ -30,5 +30,19 @@
       "path": "Code/Server/adc.py",
       "sha256": "adb0e22b5a87b5a7cb0745cb8ee6e8f7ed475294f047afeda273bb11e2b25ada"
     }
-  ]
+  ],
+  "vendor_reference": {
+    "sku": "FNK0043",
+    "product_url": "https://store.freenove.com/products/fnk0043",
+    "ordinary_wheel_outer_envelope_m": {
+      "length": 0.21,
+      "width": 0.15,
+      "height": 0.125
+    },
+    "dimension_source_image": "https://store.freenove.com/cdn/shop/files/FNK0043.PT06_16e483ca-2688-4e9f-aea4-dbc5e3068d79.jpg?v=1790071965&width=416",
+    "assembled_reference_image": "https://store.freenove.com/cdn/shop/files/FNK0043.MAIN_fac56ef0-085d-46b0-8743-ab12d50d9efe.jpg?v=1790071965&width=416",
+    "scope": "Nominal vendor ordinary-wheel assembled envelope; not measured Omega1 geometry or chassis-only dimensions",
+    "amazon_candidate_url": "https://www.amazon.com/dp/B07YD2LT9D",
+    "amazon_verification": "Direct listing inaccessible; candidate association from secondary index only"
+  }
 }

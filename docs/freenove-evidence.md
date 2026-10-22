@@ -27,3 +27,13 @@ No reliable chassis dimensions, wheel diameter, wheelbase, track width, assemble
 ## Source handling
 
 The upstream README identifies its materials as CC BY-NC-SA 3.0. RobotForge records original factual summaries, commit references and file hashes here; no vendor PDF, image or implementation is copied into this repository.
+
+## Online listing and image cross-check (2026-10-21)
+
+- [Official FNK0043 listing](https://store.freenove.com/products/fnk0043) identifies Raspberry Pi compatibility and two required 3.7 V 18650 batteries, with Pi and batteries excluded from the kit.
+- [Official assembled-car image](https://store.freenove.com/cdn/shop/files/FNK0043.MAIN_fac56ef0-085d-46b0-8743-ab12d50d9efe.jpg?v=1790071965&width=416) visually shows four ordinary yellow-hub tires, a board chassis, Raspberry Pi, and front camera/ultrasonic assembly. This is a vendor reference, not a photo of Omega1.
+- [Official size-and-packaging image](https://store.freenove.com/cdn/shop/files/FNK0043.PT06_16e483ca-2688-4e9f-aea4-dbc5e3068d79.jpg?v=1790071965&width=416) explicitly labels the assembled ordinary-wheel car as **21 cm long, 15 cm wide, 12.5 cm high**. It separately labels the box as 26.7 × 13.6 × 7.2 cm. The car values are nominal outer envelope dimensions, NOT chassis-only dimensions, wheel track or wheelbase. They cannot directly populate `chassis_dimensions_m`.
+- [Amazon candidate B07YD2LT9D](https://www.amazon.com/dp/B07YD2LT9D) was identified via external listing indexes. Direct browser access reached a shopping interstitial and then redirected to the homepage; the web extraction did not expose reliable product specifications. ASIN-to-variant association is provisional.
+- External mirrors disagree about mass and dimensions, and some explicitly report package dimensions. These are not accepted as simulation inputs. No assembled mass or wheel dimensions are asserted.
+
+Images are linked as visual references, not redistributed in the project. No perspective-derived measurements are promoted to physical specifications. Next useful measurements remain tire diameter/width, wheel centre track, front-rear wheelbase, individual masses and installed board variants.
