@@ -2,6 +2,12 @@
 
 An open-source foundation for documenting hardware and generating reproducible robot models.
 
+**By Abel Mendoza.**
+
+RobotForge turns robot descriptions — a plain-English idea, a parts list, or a published open-robot design — into validated, simulation-tested robot models. A structured hardware registry (parts with compatibility rules, sources, and licenses) is the single source of truth; deterministic generators render URDF/SDF from it; validators check structure, physics, and drivetrain kinematics; and a headless Gazebo acceptance run — spawn, settle, drive, turn, compare odometry — decides whether the robot actually works.
+
+Pre-existing open-source foundation begun October 2026. The registry-first architecture is the point: language models fill in the schema; they never hand-write robot XML.
+
 ## Status
 
 v0.1 provides a versioned JSON hardware manifest, validation CLI, Omega1 inventory, and automated tests. Primitive URDF/SDF generation and headless Gazebo prototype motion are available; a 3D assembler and physically calibrated Omega1 simulation are not yet implemented. JSON keeps this initial scaffold dependency-free and is also valid YAML 1.2.
