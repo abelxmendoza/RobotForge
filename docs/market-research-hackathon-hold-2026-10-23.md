@@ -54,3 +54,27 @@ Questions to resolve after rules release:
 An independently repeatable test that fails when the robot behaves incorrectly, passes when it behaves correctly, and reports exact inputs, source revision, simulator version, and evidence. Avoid claiming physical fidelity or sim-to-real calibration without measurements.
 
 **Freeze instruction:** No code, tests, infrastructure, integration, or demo work for the hackathon until official rules are checked and the event's build window opens.
+
+## Confirmed event details and approval (2026-10-23 email review)
+
+- **Event:** Meta Global AI Developer Hackathon, hosted via Cerebral Valley: https://cerebralvalley.ai/e/meta-ai-developer-hackathon
+- **Acceptance:** Participant received an **APPROVED** status email dated 2026-10-22. This confirms acceptance, not the eligibility of a particular project or repository.
+- **Format:** Remote; scheduled **October 26 through November 4, 2026** (10 days). The event calendar invite indicates an October 26 start at 12:00 Eastern / 09:00 Pacific and November 4 end at 21:00 Eastern / 18:00 Pacific; **verify official build-window times and submission deadline against the organizer's published rules** rather than treating the calendar as authorization to code.
+- **Promotional terms:** $1M aggregate prize pool; selected participants advertised $150 Meta Model API credits and access to Muse Code, subject to terms and actual credit allocation.
+- **Theme alignment to investigate:** Robotics/physical systems under the event's frontier-oriented themes may fit a verification-focused entry, but thematic fit does not prove eligibility or competitiveness.
+- **Rules status:** No separate official rules announcement was found in the relevant Gmail searches on 2026-10-23. The event page should be checked again at kickoff; this document is not a substitute for the final rules.
+
+## Proposed two-repository approach (decision pending rules)
+
+**Existing `RobotForge` repository:** Retain as the **pre-event brainstorming, research, architecture, and prototype baseline**. It contains genuine pre-event code (registry, URDF/SDF generation, Gazebo tooling, tests), not merely empty scaffolding. The initial prototype was developed with Meta Muse before the competition. Preserve its actual history and source attribution. Do not relabel existing implementation as event-created work.
+
+**Potential new `RobotForge-Hackathon` repository:** **Do not create before the event.** If rules permit, create a distinct repository *after the official start* and rules review for the eligible event implementation, verification evidence, demo, and submission. The repository creation timestamp proves when the repository was created **but does not prove that copied code was written then**. Explicitly identify any imported or adapted pre-event code and third-party dependencies. If pre-existing code is prohibited, start implementation from scratch within the allowed window; do not copy old code and disguise its origin.
+
+**At the authorized kickoff:**
+1. Read and save official rules/terms; verify build start/end, tracks, team size, permitted prior work, AI assistance, open-source licensing, judging, and submission format. Request organizer clarification for ambiguity.
+2. Record the existing RobotForge baseline commit SHA and a dated inventory of pre-event source and documentation.
+3. Agree with teammates on the submission scope and how to disclose prior work; decide whether a fresh repository is eligible.
+4. Only then create the submission repository and begin eligible implementation, keeping truthful commit history and clear provenance.
+5. Maintain an event-work log of new commits, tests, demonstrations, dependencies, and measurable results.
+
+**Current user direction:** Brainstorming and competitor/problem research may continue before kickoff; no hackathon implementation, new submission repository, tests, demos, or integration before the rules and official build window. No automatic action is scheduled for Monday.
